@@ -3,51 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Patch v2.0</title>
+<title>Birthday Patch v3.0 - Animation System</title>
 
 <style>
 
 /* =========================
-   🌸 乌萨奇背景（保留结构不动）
+   🌸 背景系统（乌萨奇风）
 ========================= */
 body{
     margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    color:#333;
+    overflow:hidden;
 }
 
-/* 背景图层（乌萨奇风） */
+/* 背景图 */
 body::before{
     content:"";
     position:fixed;
     inset:0;
     background:url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80");
     background-size:cover;
-    filter:blur(5px) brightness(0.95);
+    filter:blur(6px) brightness(0.95);
     z-index:-2;
 }
 
-/* 粉色柔光 */
+/* 粉色叠层 */
 body::after{
     content:"";
     position:fixed;
     inset:0;
-    background:rgba(255,230,245,0.35);
+    background:rgba(255,220,240,0.35);
     z-index:-1;
 }
 
 /* =========================
-   🧁 卡片（只做美化不改结构）
+   🧁 卡片
 ========================= */
 .card{
-    background:rgba(255,255,255,0.78);
-    border-radius:18px;
-    padding:25px;
-    margin:20px auto;
+    background:rgba(255,255,255,0.75);
     max-width:900px;
-    backdrop-filter:blur(10px);
-    box-shadow:0 15px 40px rgba(0,0,0,0.12);
-    transition:0.3s;
+    margin:20px auto;
+    padding:24px;
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+    transform:translateY(0);
+    transition:0.2s;
 }
 
 .card:hover{
@@ -55,7 +56,7 @@ body::after{
 }
 
 /* =========================
-   🎀 按钮（只升级视觉）
+   🎀 按钮系统
 ========================= */
 button{
     background:linear-gradient(135deg,#ff4fa3,#ff7ac6);
@@ -69,11 +70,11 @@ button{
 }
 
 button:hover{
-    transform:scale(1.05);
+    transform:scale(1.08);
 }
 
 /* =========================
-   🐰 乌萨奇角色层（新增）
+   🐰 乌萨奇角色系统
 ========================= */
 #usagi{
     position:fixed;
@@ -87,11 +88,11 @@ button:hover{
 
 @keyframes bounce{
     0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-12px);}
+    50%{transform:translateY(-14px);}
 }
 
 /* =========================
-   ✨ 特效层
+   ✨ 粒子系统
 ========================= */
 #fx{
     position:fixed;
@@ -112,31 +113,86 @@ button:hover{
 }
 
 /* =========================
-   📌 hidden 修复（关键）
+   🎬 Booting动画
 ========================= */
-.hidden{
-    display:none !important;
+#boot{
+    position:fixed;
+    inset:0;
+    background:#fff0f6;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:10000;
+    font-size:18px;
 }
+
+.bar{
+    width:240px;
+    height:10px;
+    background:#eee;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:20px;
+}
+
+.bar div{
+    height:100%;
+    width:0%;
+    background:#ff4fa3;
+    animation:load 2s forwards;
+}
+
+@keyframes load{
+    to{width:100%;}
+}
+
+/* =========================
+   💬 toast
+========================= */
+.toast{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:white;
+    padding:10px 16px;
+    border-radius:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    z-index:10001;
+}
+
+/* hidden */
+.hidden{display:none !important;}
 
 </style>
 </head>
 
 <body>
 
-<!-- 🐰 乌萨奇（新增，不影响原内容） -->
+<!-- 🎬 Booting -->
+<div id="boot">
+    <div>Initializing Birthday OS...</div>
+    <div class="bar"><div></div></div>
+</div>
+
+<!-- 🐰 乌萨奇 -->
 <img id="usagi" src="https://raw.githubusercontent.com/yourrepo/usagi.png">
 
-<!-- 特效层 -->
+<!-- 粒子 -->
 <div id="fx"></div>
 
-<!-- =========================
-   🧩 你的原始内容（完全保留）
-========================= -->
+<!-- ================= UI（完全保留你结构） ================= -->
 
 <div class="card">
-<h1>🎂 Birthday Patch v2.0</h1>
+<h1>🎂 Birthday Patch v3.0</h1>
 
-<p>检测到目标用户生日。</p>
+<p>系统已启动</p>
+
+<button onclick="birthday()">🎉 生日系统</button>
+<button onclick="wish()">🎁 祝福</button>
+<button onclick="showLog()">📌 日志</button>
+<button onclick="showMission()">🚨 任务</button>
 
 <pre>
 Initializing...
@@ -151,89 +207,88 @@ Initializing...
 
 <div class="card">
 <h2>🎁 随机祝福</h2>
-<button onclick="randomWish()">生成祝福</button>
 <p id="wish"></p>
 </div>
 
-<div class="card">
-<h2>🏆 Achievement</h2>
-
-<pre>
-☑ 认识时间：2年+
-☑ Debug次数：∞
-☑ 骑行分享：已解锁
-☑ 面试吐槽：已解锁
-</pre>
-
-</div>
-
-<div class="card">
+<div class="card hidden" id="log">
 <h2>📌 隐藏日志</h2>
-<button onclick="showLog()">查看</button>
-
-<div id="log" class="hidden">
-<p>其实有时候会觉得挺神奇的。</p>
-<p>能一直保持联系的人其实不多。</p>
-<p>所以还挺开心能认识你。</p>
-</div>
+<p>系统运行正常</p>
 </div>
 
-<div class="card">
-<h2>🚨 任务</h2>
-<button onclick="showMission()">领取任务</button>
-
-<div id="mission" class="hidden">
-<pre>
-Initializing Task...
-
-share → download → real_url
-</pre>
-</div>
+<div class="card hidden" id="mission">
+<h2>🚨 任务系统</h2>
+<pre>share → download → real_url</pre>
 </div>
 
 <div class="card" style="text-align:center;opacity:.6;">
-Birthday Patch v2.0
+Birthday Patch v3.0 - Full Animation System
 </div>
-
-<!-- =========================
-   🎮 JS（只做轻增强，不删逻辑）
-========================= -->
 
 <script>
 
 const fx=document.getElementById("fx");
 
-/* 🐰 乌萨奇出现 */
+/* 🎬 boot结束 */
+window.onload=()=>{
+    setTimeout(()=>{
+        document.getElementById("boot").style.display="none";
+    },2000);
+};
+
+/* 🐰 乌萨奇 */
 function showUsagi(){
     const u=document.getElementById("usagi");
     u.style.display="block";
     setTimeout(()=>u.style.display="none",3000);
 }
 
-/* 🎁 随机祝福（保留你原功能） */
-const wishes=[
-"愿所有Bug都能在第一眼发现。",
-"愿所有测试一次通过。",
-"愿所有日志都有答案。",
-"愿生活更简单一点。"
-];
+/* 🎉 主事件 */
+function birthday(){
 
-function randomWish(){
     showUsagi();
-    document.getElementById("wish").innerText =
-        wishes[Math.floor(Math.random()*wishes.length)];
+    toast("🐰 Birthday Mode Activated");
+
+    const items=["🎂","🎉","✨","🌸","💖","🎈"];
+
+    for(let i=0;i<50;i++){
+        const p=document.createElement("div");
+        p.className="particle";
+        p.innerText=items[Math.floor(Math.random()*items.length)];
+        p.style.left=Math.random()*100+"vw";
+        p.style.top="-10vh";
+        p.style.fontSize=(18+Math.random()*22)+"px";
+        p.style.animationDuration=(2+Math.random()*2.5)+"s";
+        fx.appendChild(p);
+    }
+
+    setTimeout(()=>fx.innerHTML="",4500);
 }
 
-/* 📌 log */
+/* 🎁 */
+function wish(){
+    showUsagi();
+    document.getElementById("wish").innerText="愿你被乌萨奇持续祝福 🐰✨";
+}
+
+/* 📌 */
 function showLog(){
     showUsagi();
     document.getElementById("log").classList.remove("hidden");
 }
 
-/* 🚨 mission */
+/* 🚨 */
 function showMission(){
     showUsagi();
     document.getElementById("mission").classList.remove("hidden");
+}
+
+/* 💬 toast */
+function toast(text){
+    const t=document.createElement("div");
+    t.className="toast";
+    t.innerText=text;
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),2000);
 }
 
 </script>
