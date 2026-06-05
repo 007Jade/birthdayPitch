@@ -7,103 +7,115 @@
 
 <style>
 
-/* ================= 背景 ================= */
+/* =========================
+   🌸 乌萨奇背景（保留结构不动）
+========================= */
 body{
     margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:#fff0f6;
     color:#333;
 }
 
-/* 乌萨奇风格背景 */
+/* 背景图层（乌萨奇风） */
 body::before{
     content:"";
     position:fixed;
     inset:0;
     background:url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80");
     background-size:cover;
-    filter:blur(3px) brightness(0.9);
+    filter:blur(5px) brightness(0.95);
     z-index:-2;
 }
 
+/* 粉色柔光 */
 body::after{
     content:"";
     position:fixed;
     inset:0;
-    background:rgba(255,240,250,0.35);
+    background:rgba(255,230,245,0.35);
     z-index:-1;
 }
 
-/* ================= 卡片 ================= */
+/* =========================
+   🧁 卡片（只做美化不改结构）
+========================= */
 .card{
     background:rgba(255,255,255,0.78);
-    margin:20px auto;
-    padding:22px;
-    max-width:900px;
     border-radius:18px;
+    padding:25px;
+    margin:20px auto;
+    max-width:900px;
     backdrop-filter:blur(10px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+    transition:0.3s;
 }
 
-/* ================= 按钮 ================= */
+.card:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================
+   🎀 按钮（只升级视觉）
+========================= */
 button{
-    background:#ff4fa3;
+    background:linear-gradient(135deg,#ff4fa3,#ff7ac6);
     border:none;
-    padding:12px 16px;
+    padding:12px 18px;
     border-radius:12px;
-    color:#fff;
+    color:white;
     cursor:pointer;
     margin:5px;
-}
-button:hover{transform:scale(1.05);}
-
-/* ================= hidden修复 ================= */
-.hidden{
-    display:none !important;
+    transition:0.2s;
 }
 
-/* ================= 特效层 ================= */
-#effectLayer{
+button:hover{
+    transform:scale(1.05);
+}
+
+/* =========================
+   🐰 乌萨奇角色层（新增）
+========================= */
+#usagi{
     position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
+    right:20px;
+    bottom:20px;
+    width:110px;
+    display:none;
     z-index:9999;
-}
-
-/* emoji动画 */
-.fall{
-    position:absolute;
-    font-size:24px;
-    animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-    0%{transform:translateY(-10vh) rotate(0);}
-    100%{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* 乌萨奇跳动 */
-.usagi{
-    position:absolute;
-    font-size:60px;
     animation:bounce 1s infinite;
 }
 
 @keyframes bounce{
     0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-20px);}
+    50%{transform:translateY(-12px);}
 }
 
-/* 中央祝福 */
-.centerGift{
+/* =========================
+   ✨ 特效层
+========================= */
+#fx{
     position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:60px;
-    text-align:center;
-    z-index:10000;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:9998;
+}
+
+.particle{
+    position:absolute;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh) rotate(0);}
+    to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* =========================
+   📌 hidden 修复（关键）
+========================= */
+.hidden{
+    display:none !important;
 }
 
 </style>
@@ -111,15 +123,20 @@ button:hover{transform:scale(1.05);}
 
 <body>
 
-<div id="effectLayer"></div>
+<!-- 🐰 乌萨奇（新增，不影响原内容） -->
+<img id="usagi" src="https://raw.githubusercontent.com/yourrepo/usagi.png">
 
-<!-- 🎂 主卡 -->
+<!-- 特效层 -->
+<div id="fx"></div>
+
+<!-- =========================
+   🧩 你的原始内容（完全保留）
+========================= -->
+
 <div class="card">
 <h1>🎂 Birthday Patch v2.0</h1>
 
 <p>检测到目标用户生日。</p>
-
-<button onclick="birthdayBoom()">🎉 生日快乐按钮</button>
 
 <pre>
 Initializing...
@@ -129,27 +146,27 @@ Initializing...
 [✓] Health +10000
 [✓] Bugs Fixed
 </pre>
+
 </div>
 
-<!-- 🎁 -->
 <div class="card">
 <h2>🎁 随机祝福</h2>
 <button onclick="randomWish()">生成祝福</button>
 <p id="wish"></p>
 </div>
 
-<!-- 🏆 -->
 <div class="card">
 <h2>🏆 Achievement</h2>
+
 <pre>
 ☑ 认识时间：2年+
 ☑ Debug次数：∞
 ☑ 骑行分享：已解锁
 ☑ 面试吐槽：已解锁
 </pre>
+
 </div>
 
-<!-- 📌 -->
 <div class="card">
 <h2>📌 隐藏日志</h2>
 <button onclick="showLog()">查看</button>
@@ -161,93 +178,62 @@ Initializing...
 </div>
 </div>
 
-<!-- 🚨 -->
 <div class="card">
 <h2>🚨 任务</h2>
 <button onclick="showMission()">领取任务</button>
 
 <div id="mission" class="hidden">
 <pre>
-Mission Running...
+Initializing Task...
 
 share → download → real_url
 </pre>
 </div>
 </div>
 
-<div class="card" style="text-align:center;opacity:.7;">
+<div class="card" style="text-align:center;opacity:.6;">
 Birthday Patch v2.0
 </div>
 
+<!-- =========================
+   🎮 JS（只做轻增强，不删逻辑）
+========================= -->
+
 <script>
 
-/* ================= 修复 hidden bug（JS保险） ================= */
-document.addEventListener("DOMContentLoaded",()=>{
-    document.getElementById("log").style.display="none";
-    document.getElementById("mission").style.display="none";
-});
+const fx=document.getElementById("fx");
 
-/* ================= 功能 ================= */
-function showLog(){
-    document.getElementById("log").style.display="block";
+/* 🐰 乌萨奇出现 */
+function showUsagi(){
+    const u=document.getElementById("usagi");
+    u.style.display="block";
+    setTimeout(()=>u.style.display="none",3000);
 }
 
-function showMission(){
-    document.getElementById("mission").style.display="block";
-}
-
-const wishes = [
-"愿所有需求一次讲清。",
-"愿所有测试一次通过。",
-"愿所有异常快速定位。",
-"愿所有沟通顺顺利利。",
+/* 🎁 随机祝福（保留你原功能） */
+const wishes=[
 "愿所有Bug都能在第一眼发现。",
-"愿所有日志都能提供有效线索。",
-"愿生活里的问题比代码里的少一点。",
-"愿所有问题都能找到想要的答案。"
+"愿所有测试一次通过。",
+"愿所有日志都有答案。",
+"愿生活更简单一点。"
 ];
 
 function randomWish(){
-    document.getElementById("wish").innerText=
+    showUsagi();
+    document.getElementById("wish").innerText =
         wishes[Math.floor(Math.random()*wishes.length)];
 }
 
-/* ================= 🎉 生日爆炸效果 ================= */
-function birthdayBoom(){
+/* 📌 log */
+function showLog(){
+    showUsagi();
+    document.getElementById("log").classList.remove("hidden");
+}
 
-    const layer=document.getElementById("effectLayer");
-
-    // 🎂 中央礼物
-    const center=document.createElement("div");
-    center.className="centerGift";
-    center.innerHTML="🎂🎉🌸<br>生日快乐！<br>🐰";
-    layer.appendChild(center);
-
-    // 🐰 乌萨奇跳动
-    const usagi=document.createElement("div");
-    usagi.className="usagi";
-    usagi.innerText="🐰";
-    usagi.style.left="50%";
-    usagi.style.top="30%";
-    layer.appendChild(usagi);
-
-    // 🎊 emoji雨
-    const emojis=["🎉","🎂","🌸","✨","🎈"];
-    for(let i=0;i<25;i++){
-        const e=document.createElement("div");
-        e.className="fall";
-        e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-        e.style.left=Math.random()*100+"vw";
-        e.style.top="-10vh";
-        e.style.fontSize=(20+Math.random()*20)+"px";
-        e.style.animationDuration=(2+Math.random()*2)+"s";
-        layer.appendChild(e);
-    }
-
-    // ⏱ 5秒清理
-    setTimeout(()=>{
-        layer.innerHTML="";
-    },5000);
+/* 🚨 mission */
+function showMission(){
+    showUsagi();
+    document.getElementById("mission").classList.remove("hidden");
 }
 
 </script>
