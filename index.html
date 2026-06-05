@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Patch v2.0</title>
+
+<style>
+body{
+    background:#0f172a;
+    color:#e2e8f0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    max-width:900px;
+    margin:auto;
+    padding:30px;
+    line-height:1.8;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 0 15px rgba(0,0,0,.25);
+}
+
+h1,h2{
+    color:#38bdf8;
+}
+
+button{
+    background:#38bdf8;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.hidden{
+    display:none;
+}
+
+pre{
+    background:#020617;
+    padding:15px;
+    border-radius:8px;
+    overflow:auto;
+}
+
+.typewriter{
+    white-space:pre-wrap;
+}
+
+.footer{
+    text-align:center;
+    margin-top:40px;
+    opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>? Birthday Patch v2.0</h1>
+
+<p>检测到目标用户生日。</p>
+
+<pre>
+Initializing...
+
+[?] Age +1
+[?] Happiness +100
+[?] Health +100
+[?] Cycling Endurance +50km
+[?] Random Bugs Fixed
+
+[ ] 希望上周那个麻烦事早点解决
+</pre>
+
+<p>生日快乐 ?</p>
+</div>
+
+<div class="card">
+<h2>? 随机生日祝福</h2>
+
+<button onclick="randomWish()">生成祝福</button>
+
+<p id="wish"></p>
+</div>
+
+<div class="card">
+<h2>? Achievement Unlocked</h2>
+
+<pre>
+? 认识时间：2年+
+
+? 技术讨论次数：∞
+
+? Debug次数：∞
+
+? 骑行分享：已解锁
+
+? 面试吐槽：已解锁
+
+? 失联后重新出现：已解锁
+</pre>
+</div>
+
+<div class="card">
+<h2>? 隐藏日志</h2>
+
+<button onclick="showLog()">查看</button>
+
+<div id="log" class="hidden">
+
+<p>
+其实有时候会觉得挺神奇的。
+</p>
+
+<p>
+两年前因为问题认识的人，
+到现在遇到一些事情，
+还是会下意识想到：
+</p>
+
+<pre>
+"这个好像可以问问你。"
+</pre>
+
+<p>
+虽然大部分时间都在讨论技术、
+项目、学习和各种奇怪的问题。
+</p>
+
+<p>
+但仔细想想，
+能一直保持联系的人其实不多。
+</p>
+
+<p>
+所以还挺开心能认识你的。
+</p>
+
+<p>
+希望以后除了技术问题，
+也能偶尔聊聊别的东西（笑）。
+</p>
+
+</div>
+</div>
+
+<div class="card">
+<h2>? 寿星专属任务</h2>
+
+<button onclick="showMission()">领取任务</button>
+
+<div id="mission" class="hidden">
+
+<pre>
+Mission Failed
+
+Current Progress:
+
+[?] 抓到 share
+
+[?] 抓到 download
+
+[ ] 找到 real download url
+
+Blocked By:
+
+返回包 list 字段疑似加密
+
+目前还没定位到：
+
+share
+ ↓
+download
+ ↓
+real_url
+
+这条链路的真实生成逻辑
+</pre>
+
+<p>
+如果寿星大人刚好有思路，
+欢迎顺手救救孩子 ?
+</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+Birthday Patch v2.0
+</div>
+
+<script>
+
+const wishes = [
+"愿所有需求一次讲清。",
+"愿所有测试一次通过。",
+"愿所有异常快速定位。",
+"愿所有面试顺顺利利。",
+"愿所有Bug都能在第一眼发现。",
+"愿所有日志都能提供有效线索。",
+"愿生活里的问题比代码里的少一点。"
+];
+
+function randomWish(){
+    document.getElementById("wish").innerText =
+        wishes[Math.floor(Math.random()*wishes.length)];
+}
+
+function showLog(){
+    document.getElementById("log").classList.remove("hidden");
+}
+
+function showMission(){
+    document.getElementById("mission").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
