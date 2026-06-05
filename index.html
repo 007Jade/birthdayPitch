@@ -11,7 +11,8 @@
 body{
     margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:#fff0f6;
+    background:#fff0f6; /* 温柔粉色背景 */
+    /*background:url("usagi_bg.jpg");*/
     color:#333;
 }
 
@@ -78,9 +79,17 @@ button:hover{transform:scale(1.05);}
     animation:fall 3s linear forwards;
 }
 
-@keyframes fall{
-    0%{transform:translateY(-10vh) rotate(0);}
-    100%{transform:translateY(110vh) rotate(360deg);}
+@keyframes bounce{
+    0%,100%{
+        transform:
+        translate(-50%,-50%)
+        translateY(0);
+    }
+    50%{
+        transform:
+        translate(-50%,-50%)
+        translateY(-20px);
+    }
 }
 
 /* 乌萨奇跳动 */
@@ -107,7 +116,7 @@ button:hover{transform:scale(1.05);}
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    font-size:60px;
+    font-size:42px;
     text-align:center;
     z-index:10000;
 }
@@ -125,7 +134,7 @@ button:hover{transform:scale(1.05);}
 
 <p>检测到目标用户生日。</p>
 
-<button onclick="birthdayBoom()">🎉 生日快乐按钮</button>
+<button onclick="birthdayBoom()">生日快乐</button>
 
 <pre>
 Initializing...
@@ -197,11 +206,25 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 /* ================= 功能 ================= */
 function showLog(){
-    document.getElementById("log").style.display="block";
+    /*document.getElementById("log").style.display="block";*/
+    const log=
+    document.getElementById("log");
+    if(log.style.display==="block"){
+        log.style.display="none";
+    }else{
+        log.style.display="block";
+    }
 }
 
 function showMission(){
-    document.getElementById("mission").style.display="block";
+    /*document.getElementById("mission").style.display="block";*/
+    const mission=
+    document.getElementById("mission");
+    if(mission.style.display==="block"){
+        mission.style.display="none";
+    }else{
+        mission.style.display="block";
+    }
 }
 
 const wishes = [
@@ -223,47 +246,75 @@ function randomWish(){
 /* ================= 🎉 生日爆炸效果 ================= */
 function birthdayBoom(){
 
-    const layer=document.getElementById("effectLayer");
+    const layer =
+    document.getElementById("effectLayer");
+    const existingVideo =
+    layer.querySelector("video");
+    if(existingVideo){
+        return;
+    }
 
-    // 🎂 中央礼物
+    // 🎂 中央生日祝福
     const center=document.createElement("div");
     center.className="centerGift";
-    center.innerHTML="🎂🎉🌸<br>生日快乐！";
+    center.innerHTML=
+    `
+    🎂🎉🌸
+    <br>
+    生日快乐！
+    <br>
+    🎈✨🎈
+    `;
     layer.appendChild(center);
-
-    // 🐰 乌萨奇生日视频
+    // 🐰 乌萨奇视频
     const usagi=document.createElement("video");
     usagi.className="usagi";
-
     usagi.src="usagi.mp4";
     usagi.autoplay=true;
-    usagi.muted=true;       // 浏览器自动播放必须静音
-    usagi.playsInline=true; // 手机兼容
-    usagi.loop=true;
-
+    usagi.muted=false;
+    usagi.volume=1.0;
+    usagi.playsInline=true;
+    usagi.controls=false;
     usagi.style.left="50%";
-    usagi.style.top="30%";
-
+    usagi.style.top="35%";
     layer.appendChild(usagi);
 
-    // 🎊 emoji雨
-    const emojis=["🎉","🎂","🌸","✨","🎈"];
+    // 🎊 礼花雨
 
-    for(let i=0;i<25;i++){
+    const emojis=[
+        "🎉",
+        "🎂",
+        "🌸",
+        "✨",
+        "🎈",
+        "💖"
+    ];
+
+    for(let i=0;i<60;i++){
         const e=document.createElement("div");
         e.className="fall";
-        e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-        e.style.left=Math.random()*100+"vw";
+        e.innerText=
+        emojis[
+            Math.floor(
+                Math.random()*emojis.length
+            )
+        ];
+        e.style.left=
+            Math.random()*100+"vw";
         e.style.top="-10vh";
-        e.style.fontSize=(20+Math.random()*20)+"px";
-        e.style.animationDuration=(2+Math.random()*2)+"s";
+        e.style.fontSize=
+            (20+Math.random()*30)+"px";
+        e.style.animationDuration=
+            (2+Math.random()*3)+"s";
         layer.appendChild(e);
     }
 
-    // ⏱ 5秒清理
-    setTimeout(()=>{
+    // 视频结束自动关闭
+    usagi.addEventListener("ended",()=>{
+        usagi.pause();
         layer.innerHTML="";
-    },20000);
+    });
+
 }
 </script>
 
