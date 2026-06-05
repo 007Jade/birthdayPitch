@@ -6,224 +6,248 @@
 <title>Birthday Patch v2.0</title>
 
 <style>
+
+/* ================= 背景 ================= */
 body{
-    background:#0f172a;
-    color:#e2e8f0;
+    margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    max-width:900px;
-    margin:auto;
-    padding:30px;
-    line-height:1.8;
+    background:#fff0f6;
+    color:#333;
 }
 
+/* 乌萨奇风格背景 */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    filter:blur(3px) brightness(0.9);
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(255,240,250,0.35);
+    z-index:-1;
+}
+
+/* ================= 卡片 ================= */
 .card{
-    background:#1e293b;
-    border-radius:16px;
-    padding:25px;
-    margin-bottom:20px;
-    box-shadow:0 0 15px rgba(0,0,0,.25);
+    background:rgba(255,255,255,0.78);
+    margin:20px auto;
+    padding:22px;
+    max-width:900px;
+    border-radius:18px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
-h1,h2{
-    color:#38bdf8;
-}
-
+/* ================= 按钮 ================= */
 button{
-    background:#38bdf8;
+    background:#ff4fa3;
     border:none;
-    padding:12px 20px;
-    border-radius:8px;
+    padding:12px 16px;
+    border-radius:12px;
+    color:#fff;
     cursor:pointer;
-    font-size:16px;
+    margin:5px;
 }
+button:hover{transform:scale(1.05);}
 
-button:hover{
-    opacity:.9;
-}
-
+/* ================= hidden修复 ================= */
 .hidden{
-    display:none;
+    display:none !important;
 }
 
-pre{
-    background:#020617;
-    padding:15px;
-    border-radius:8px;
-    overflow:auto;
+/* ================= 特效层 ================= */
+#effectLayer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:9999;
 }
 
-.typewriter{
-    white-space:pre-wrap;
+/* emoji动画 */
+.fall{
+    position:absolute;
+    font-size:24px;
+    animation:fall 3s linear forwards;
 }
 
-.footer{
+@keyframes fall{
+    0%{transform:translateY(-10vh) rotate(0);}
+    100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* 乌萨奇跳动 */
+.usagi{
+    position:absolute;
+    font-size:60px;
+    animation:bounce 1s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+}
+
+/* 中央祝福 */
+.centerGift{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:60px;
     text-align:center;
-    margin-top:40px;
-    opacity:.7;
+    z-index:10000;
 }
+
 </style>
 </head>
 
 <body>
 
+<div id="effectLayer"></div>
+
+<!-- 🎂 主卡 -->
 <div class="card">
 <h1>🎂 Birthday Patch v2.0</h1>
 
 <p>检测到目标用户生日。</p>
 
+<button onclick="birthdayBoom()">🎉 生日快乐按钮</button>
+
 <pre>
 Initializing...
 
 [✓] Age +1
-[✓] Happiness +100
-[✓] Health +100
-[✓] Cycling Endurance +50km
-[✓] Random Bugs Fixed
-
-[ ] 希望上周那个麻烦事早点解决
+[✓] Happiness +10000
+[✓] Health +10000
+[✓] Bugs Fixed
 </pre>
-
-<p>生日快乐 🎉</p>
 </div>
 
+<!-- 🎁 -->
 <div class="card">
-<h2>🎁 随机生日祝福</h2>
-
+<h2>🎁 随机祝福</h2>
 <button onclick="randomWish()">生成祝福</button>
-
 <p id="wish"></p>
 </div>
 
+<!-- 🏆 -->
 <div class="card">
-<h2>🏆 Achievement Unlocked</h2>
-
+<h2>🏆 Achievement</h2>
 <pre>
 ☑ 认识时间：2年+
-
-☑ 技术讨论次数：∞
-
 ☑ Debug次数：∞
-
 ☑ 骑行分享：已解锁
-
 ☑ 面试吐槽：已解锁
-
-☑ 失联后重新出现：已解锁
 </pre>
 </div>
 
+<!-- 📌 -->
 <div class="card">
 <h2>📌 隐藏日志</h2>
-
 <button onclick="showLog()">查看</button>
 
 <div id="log" class="hidden">
-
-<p>
-其实有时候会觉得挺神奇的。
-</p>
-
-<p>
-两年前因为问题认识的人，
-到现在遇到一些事情，
-还是会下意识想到：
-</p>
-
-<pre>
-"这个好像可以问问你。"
-</pre>
-
-<p>
-虽然大部分时间都在讨论技术、
-项目、学习和各种奇怪的问题。
-</p>
-
-<p>
-但仔细想想，
-能一直保持联系的人其实不多。
-</p>
-
-<p>
-所以还挺开心能认识你的。
-</p>
-
-<p>
-希望以后除了技术问题，
-也能偶尔聊聊别的东西（笑）。
-</p>
-
+<p>其实有时候会觉得挺神奇的。</p>
+<p>能一直保持联系的人其实不多。</p>
+<p>所以还挺开心能认识你。</p>
 </div>
 </div>
 
+<!-- 🚨 -->
 <div class="card">
-<h2>🚨 寿星专属任务</h2>
-
+<h2>🚨 任务</h2>
 <button onclick="showMission()">领取任务</button>
 
 <div id="mission" class="hidden">
-
 <pre>
-Mission Failed
+Mission Running...
 
-Current Progress:
-
-[✓] 抓到 share
-
-[✓] 抓到 download
-
-[ ] 找到 real download url
-
-Blocked By:
-
-返回包 list 字段疑似加密
-
-目前还没定位到：
-
-share
- ↓
-download
- ↓
-real_url
-
-这条链路的真实生成逻辑
+share → download → real_url
 </pre>
-
-<p>
-如果寿星大人刚好有思路，
-欢迎顺手救救孩子 😂
-</p>
-
+</div>
 </div>
 
-</div>
-
-<div class="footer">
+<div class="card" style="text-align:center;opacity:.7;">
 Birthday Patch v2.0
 </div>
 
 <script>
 
+/* ================= 修复 hidden bug（JS保险） ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+    document.getElementById("log").style.display="none";
+    document.getElementById("mission").style.display="none";
+});
+
+/* ================= 功能 ================= */
+function showLog(){
+    document.getElementById("log").style.display="block";
+}
+
+function showMission(){
+    document.getElementById("mission").style.display="block";
+}
+
 const wishes = [
 "愿所有需求一次讲清。",
 "愿所有测试一次通过。",
 "愿所有异常快速定位。",
-"愿所有面试顺顺利利。",
+"愿所有沟通顺顺利利。",
 "愿所有Bug都能在第一眼发现。",
 "愿所有日志都能提供有效线索。",
-"愿生活里的问题比代码里的少一点。"
+"愿生活里的问题比代码里的少一点。",
+"愿所有问题都能找到想要的答案。"
 ];
 
 function randomWish(){
-    document.getElementById("wish").innerText =
+    document.getElementById("wish").innerText=
         wishes[Math.floor(Math.random()*wishes.length)];
 }
 
-function showLog(){
-    document.getElementById("log").classList.remove("hidden");
-}
+/* ================= 🎉 生日爆炸效果 ================= */
+function birthdayBoom(){
 
-function showMission(){
-    document.getElementById("mission").classList.remove("hidden");
+    const layer=document.getElementById("effectLayer");
+
+    // 🎂 中央礼物
+    const center=document.createElement("div");
+    center.className="centerGift";
+    center.innerHTML="🎂🎉🌸<br>生日快乐！<br>🐰";
+    layer.appendChild(center);
+
+    // 🐰 乌萨奇跳动
+    const usagi=document.createElement("div");
+    usagi.className="usagi";
+    usagi.innerText="🐰";
+    usagi.style.left="50%";
+    usagi.style.top="30%";
+    layer.appendChild(usagi);
+
+    // 🎊 emoji雨
+    const emojis=["🎉","🎂","🌸","✨","🎈"];
+    for(let i=0;i<25;i++){
+        const e=document.createElement("div");
+        e.className="fall";
+        e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left=Math.random()*100+"vw";
+        e.style.top="-10vh";
+        e.style.fontSize=(20+Math.random()*20)+"px";
+        e.style.animationDuration=(2+Math.random()*2)+"s";
+        layer.appendChild(e);
+    }
+
+    // ⏱ 5秒清理
+    setTimeout(()=>{
+        layer.innerHTML="";
+    },5000);
 }
 
 </script>
