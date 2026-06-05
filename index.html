@@ -207,33 +207,20 @@ Birthday Patch v2.0
 
 <script>
 
-/* ================= 修复 hidden bug（JS保险） ================= */
-document.addEventListener("DOMContentLoaded",()=>{
-    document.getElementById("log").style.display="none";
-    document.getElementById("mission").style.display="none";
-});
-
 /* ================= 功能 ================= */
 function showLog(){
     /*document.getElementById("log").style.display="block";*/
-    const log=
+    const log =
     document.getElementById("log");
-    if(log.style.display==="block"){
-        log.style.display="none";
-    }else{
-        log.style.display="block";
-    }
+    log.classList.toggle("hidden");
 }
 
 function showMission(){
     /*document.getElementById("mission").style.display="block";*/
-    const mission=
+    const mission =
     document.getElementById("mission");
-    if(mission.style.display==="block"){
-        mission.style.display="none";
-    }else{
-        mission.style.display="block";
-    }
+    mission.classList.toggle("hidden");
+    
 }
 
 const wishes = [
